@@ -1,6 +1,7 @@
 # NOTICE
 This project is currntly in beta as I wait for model optimization. As such, its predictions can be fairly inaccurate. Also, 
-in current release, the project does not support running on Windows systems.
+in current release, the project does not support running on Windows systems. In its current release, it is also not 
+documented, as I often forget to document my code while writing it. In future releases, it will be.
 
 ---
 

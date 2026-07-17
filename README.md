@@ -1,2 +1,2 @@
-# WGU_Capstone
-This project exists as the capstone for my BS degree at Western Governor's University
+# NOTICE
+This project is currntly in beta as I wait for model optimization. As such, its predictions can be fairly inaccurate.

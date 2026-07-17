@@ -1,0 +1,1 @@
+{"columns": ["brokered_by", "status", "price", "bed", "bath", "acre_lot", "street", "state", "zip_code", "house_size", "year", "month", "day"], "medians": {"brokered_by": 52882.0, "price": 325000.0, "bed": 3.0, "bath": 2.0, "acre_lot": 0.26, "street": 1012692.0, "zip_code": 48415.0, "house_size": 1760.0}, "cat_columns": ["status", "state", "year", "month", "day"]}

@@ -19,22 +19,24 @@ def go(args):
     project_path = os.path.dirname(os.path.abspath(__file__))
     metrics_path = os.path.join(project_path, 'model', 'metrics.json')
     model_path = os.path.join(project_path, 'model', 'model.pkl')
-    cf_path = os.path.join(project_path, 'model', 'cf.pkl')
+    enc_path = os.path.join(project_path, 'model', 'enc.pkl')
     md_path = os.path.join(project_path, 'data', 'metadata.json')
     
     # Load model, column transformer, and metadata
     print('Loading model')
     model = load_model(model_path)
-    cf = load_model(cf_path)
+    enc = load_model(enc_path)
     md = load_metadata(md_path)
     
     # Process user data from input_file CL argument
     if args.u:
         user_df = args.input_file
-        user_df = process_user_data(user_df, cf, md)
+        user_df = pd.read_csv(user_df)
+        user_df = process_user_data(user_df, enc, md)
     else:
         user_df = 'example.csv'
-        user_df = process_user_data(user_df, cf, md)
+        user_df = pd.read_csv(user_df)
+        user_df = process_user_data(user_df, enc, md)
     
     
     
@@ -52,7 +54,7 @@ def go(args):
     # Inverse transform categorical columns
     cat_cols = md['cat_columns']
     user_df[cat_cols] = pd.DataFrame(
-        cf.inverse_transform(user_df[cat_cols]),
+        enc.inverse_transform(user_df[cat_cols]),
         columns=cat_cols
     )
     

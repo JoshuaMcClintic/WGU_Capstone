@@ -25,7 +25,7 @@ def create_model(args):
 	os.makedirs(os.path.join(project_path, 'data'), exist_ok=True)
 	md_path = os.path.join(project_path, 'data', 'metadata.json')
 	model_path = os.path.join(project_path, 'model', 'model.pkl')
-	cf_path = os.path.join(project_path, 'model', 'cf.pkl')
+	enc_path = os.path.join(project_path, 'model', 'enc.pkl')
 	metrics_path = os.path.join(project_path, 'model', 'metrics.json')
 	
 	# If skip_clean argument is not made in cli, clean the data
@@ -55,10 +55,10 @@ def create_model(args):
 	data = pd.read_csv(data_path)
 	
 	# Split data, get encoder out
-	X_train, y_train, X_test, y_test, cf = process_train_data(data, clean)
+	X_train, y_train, X_test, y_test, enc = process_train_data(data, clean)
 	
 	# Save column transformer
-	save_model(cf, cf_path)
+	save_model(enc, enc_path)
 	
 	# Train model on X_train, y_train
 	model = train_model(X_train, y_train)

@@ -47,12 +47,12 @@ project_path = (os.path.dirname(os.path.abspath(__file__)))[:-2]
 
 
 
-def process_train_data(data, do_clean=True):
+def process_train_data(df, do_clean=True):
 	"""
 	Cleans and splits the dataset to train and test. Also saves metadata and fitted encoder to be used on user data
 	
 	ACCEPTS:
-		data - pandas DataFrame to clean
+		df - pandas DataFrame to clean
 		do_clean - Boolean; If False, skips the initial cleaning step
 	
 	RETURNS:
@@ -62,13 +62,14 @@ def process_train_data(data, do_clean=True):
 		y_test - Test prices to test model
 		encoder - Fitted column transformer with OrdinalEncoder
 	"""
-	df = data
-	
 	# If do_clean, clean data by dropping unused columns and removing nulls 
 	# and outliers in price column
 	if do_clean:
 		print('Cleaning data...')
-		df = df.drop(columns=['prev_sold_date', 'brokered_by', 'street'])
+		# Ensure columns exist in df before dropping
+		for col in ['prev_sold_date', 'brokered_by', 'street']:
+			if col in df.columns:
+				df = df.drop(columns=col)
 
 		df = df.dropna(subset='price')
 		df = df.query('price < 1000000')
@@ -119,19 +120,18 @@ def process_train_data(data, do_clean=True):
 	return X_train, y_train, X_test, y_test, enc
 	
 	
-def process_user_data(user_file, enc, md):
+def process_user_data(user_df, enc, md):
 	"""
 	Ensure columns in user data match what the model expects and encodes categorical columns
 	
 	ACCEPTS:
-		user_file - csv file for users to pass through model
-		cf - ColumnTransformer to encode categorical columns in user_file
+		user_df - pandas DataFrame for users to pass through model
+		enc - OrdinalEncoder to encode categorical columns in user_file
+		md - Metadata of training data
 	
 	RETURNS:
 		user_df - Processed user dataset
 	"""
-	# Load user data
-	user_df = pd.read_csv(user_file)
 	
 	# Get column names, categorical columns, and medians from md
 	columns = md['columns']
@@ -151,6 +151,11 @@ def process_user_data(user_file, enc, md):
 			# If numerical, use training dataset's median value
 			else:
 				user_df[col] = medians[col]
+	for col in user_df.columns:
+		if col == 'price':
+			raise ValueError('"Price" column should not be your dataset.')
+		if col not in columns:
+			raise ValueError(f'Column {col} does not exist in training data.')
 	
 	# Encode user_df categorical columns
 	user_df = user_df.reindex(columns=columns)

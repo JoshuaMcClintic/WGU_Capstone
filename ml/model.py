@@ -27,7 +27,8 @@ def train_model(X_train, y_train):
 		max_iter=500,
 		max_leaf_nodes=100,
 		max_depth=100,
-		min_samples_leaf=100)
+		min_samples_leaf=100
+	)
 	
 	# Fit regressor with training data
 	model = regressor.fit(X_train, y_train)

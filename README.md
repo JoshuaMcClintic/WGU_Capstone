@@ -134,20 +134,20 @@ This is the main script to run csv files through a trained model.
 **Command Line Arguments**
 
 * -u: 
-  * Flag, boolean
-  * If -u is written in the command line, --input_file must also be specified. If not, "example.csv" is run through the model
+* * Flag, boolean
+* * If -u is written in the command line, --input_file must also be specified. If not, "example.csv" is run through the model
 
 * --input_file [path/to/file/filename.csv]:
-  * Filepath, string
-  * Path to the input file, including file name. Rather than type out the full filepath, you can click and drag a file to the command line
+* * Filepath, string
+* * Path to the input file, including file name. Rather than type out the full filepath, you can click and drag a file to the command line
 
 * -n:
-  * Flag, boolean
-  * If -n is written in the command line, --output_file must also be specified. If not, the input_file will be overwritten
+* * Flag, boolean
+* * If -n is written in the command line, --output_file must also be specified. If not, the input_file will be overwritten
 
 * --output_file [existing/path/filename.csv]:
-  * Filepath, string
-  * Path to write the output to, including file name. If just a filename is given without a path, the output will be written to the folder main.py is located. Otherwise, the given path must already exist.
+* * Filepath, string
+* * Path to write the output to, including file name. If just a filename is given without a path, the output will be written to the folder main.py is located. Otherwise, the given path must already exist.
 
 
 ### train_model.py
@@ -158,15 +158,15 @@ something goes wrong, such as a corrupted or missing file.
 **Command Line Arguments**
 
 * --skip_clean:
-  * Flag, boolean
-  * If written to the command line, skips a basic preprocessing step. By using this argument, -t and --training_data are ignored. If "clean_data.csv" does not exist in the "data/" folder, calling this argument will cause an error.
+* * Flag, boolean
+* * If written to the command line, skips a basic preprocessing step. By using this argument, -t and --training_data are ignored. If "clean_data.csv" does not exist in the "data/" folder, calling this argument will cause an error.
 
 * -t:
-  * Flag, boolean
-  * If used, --training_data must be specified. Otherwise, the Kaggle dataset will be used.
+* * Flag, boolean
+* * If used, --training_data must be specified. Otherwise, the Kaggle dataset will be used.
 
 * --training_data [path/to/file/filename.csv]
-  * Filepath, string
-  * If -t is not used, this argument will be ignored. Otherwise, path to the training dataset (as a csv file) to be used to train the model.
+* * Filepath, string
+* * If -t is not used, this argument will be ignored. Otherwise, path to the training dataset (as a csv file) to be used to train the model.
 
 

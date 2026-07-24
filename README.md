@@ -167,20 +167,20 @@ This is the main script to run csv files through a trained model.
 **Command Line Arguments**
 
 * -e: 
-* * Flag, boolean
-* * If -e is written, the "example.csv" file will be passed through the model. If used, the other arguments will be ignored.
+  * Flag, boolean
+  * If -e is written, the "example.csv" file will be passed through the model. If used, the other arguments will be ignored.
 
 * --input_file [path/to/file/filename.csv]:
-* * Filepath, string
-* * Path to the input file, including file name. Rather than type out the full filepath, you can click and drag a file to the command line
+  * Filepath, string
+  * Path to the input file, including file name. Rather than type out the full filepath, you can click and drag a file to the command line
 
 * --output_file [existing/path/filename.csv]:
-* * Filepath, string
-* * Path to write the output to, including file name. If just a filename is given without a path, the output will be written to the folder main.py is located. Otherwise, the given path must already exist.
+  * Filepath, string
+  * Path to write the output to, including file name. If just a filename is given without a path, the output will be written to the folder main.py is located. Otherwise, the given path must already exist.
 
 * --budget [int]
-* * Integer number
-* * Maximum price to include in the output. If this value is specified, after the model is run, any row where the prediction value is above this number will be removed and not included in the final output. It should be a whole number, so no decimals.
+  * Integer number
+  * Maximum price to include in the output. If this value is specified, after the model is run, any row where the prediction value is above this number will be removed and not included in the final output. It should be a whole number, so no decimals.
 
 
 Note that the `--budget` argument does not get used on the min or max estimates, only the prediction. As such, if used, some 
@@ -196,12 +196,12 @@ something goes wrong, such as a corrupted or missing file.
 **Command Line Arguments**
 
 * --skip_clean:
-* * Flag, boolean
-* * If written to the command line, skips a basic preprocessing step. By using this argument, --training_data is ignored. If "clean_data.csv" does not exist in the "data/" folder, calling this argument will cause an error.
+  * Flag, boolean
+  * If written to the command line, skips a basic preprocessing step. By using this argument, --training_data is ignored. If "clean_data.csv" does not exist in the "data/" folder, calling this argument will cause an error.
 
 * --training_data [path/to/file/filename.csv]
-* * Filepath, string
-* * Path to the training data. If "--skip_clean" is used, this argument will be ignored. This argument should only be used if you know what you are doing, and is only here in case the original data file is updated and someone wants to update the model.
+  * Filepath, string
+  * Path to the training data. If "--skip_clean" is used, this argument will be ignored. This argument should only be used if you know what you are doing, and is only here in case the original data file is updated and someone wants to update the model.
 
 
 ## Error Visualizations.

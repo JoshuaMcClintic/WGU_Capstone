@@ -23,11 +23,11 @@ def train_model(X_train, y_train):
 	regressor = HistGradientBoostingRegressor(
 		loss='absolute_error', 
 		random_state=42, 
-		learning_rate=0.5,
-		max_iter=500,
-		max_leaf_nodes=100,
-		max_depth=100,
-		min_samples_leaf=100
+		learning_rate=0.4,
+		max_iter=550,
+		max_leaf_nodes=125,
+		max_depth=75,
+		min_samples_leaf=75
 	)
 	
 	# Fit regressor with training data

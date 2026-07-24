@@ -8,14 +8,14 @@ can be found in the `train_model` function in `/ml/model.py`, are currently as f
 
 * loss='absolute_error'
 * random_state=42
-* learning_rate=0.5
-* max_iter=500
-* max_leaf_nodes=100
-* max_depth=100
-* min_samples_leaf=100
+* learning_rate=0.4
+* max_iter=550
+* max_leaf_nodes=125
+* max_depth=75
+* min_samples_leaf=75
 
-These hyperparams were determined based on a grid-search using mean_absolute_error as its scoring, set with
- `scoring='neg_mean_absolute_error'`.
+These hyperparams were determined based on a grid-search using mean_absolute_error as its scoring, set with 
+`scoring='neg_mean_absolute_error'`.
 
 
 ## Intended Use 
@@ -38,12 +38,12 @@ The data used to evaluate this model is the left over 25% of the data linked abo
 
 ## Metrics
 
-The metrics for the model can be found at "/model/metrics.json", or by running the train_model.py script, as the metrics are printed 
-to the terminal when training the model. Currently, they are as follows:
+The metrics for the model can be found at "/model/metrics.json", or by running the train_model.py script, as the metrics are 
+printed to the terminal when training the model. Currently, they are as follows:
 
-* Mean Absolute Error: 85926.17
-* Median Absolute Error: 53153.32
-* $$R^2$$ Score: 0.682
+* Mean Absolute Error:  74,506.49
+* Median Absolute Error: 44,616.62
+* $$R^2$$ Score: 0.7452
 
 
 ## Ethical Considerations
@@ -56,7 +56,8 @@ claim that they are using the same model for everyone, therefore they aren't dis
 
 Technically, I could only output the prediction, and not the range, but I would also, in that case, have to either not publicize 
 the error metrics or publicize them, but try to make it seem like they don't have a significant impact on the accuracy of the 
-predictions. Both of these options involve obscuring the models performance in some way, however, which is unethical in its own way.
+predictions. Both of these options involve obscuring the models performance in some way, however, which is unethical in its own 
+way.
 
 
 ## Caveats and Recommendations

@@ -31,7 +31,7 @@ def create_model(args):
 	# If skip_clean argument is not made in cli, clean the data
 	if not args.skip_clean:
 		# Download the training dataset from Kaggle
-		if not args.t:
+		if args.training_data == '':
 			print('Downloading training data...')
 			path = kagglehub.dataset_download("ahmedshahriarsakib/usa-real-estate-dataset")
 			data_path = os.path.join(path, 'realtor-data.zip.csv')
@@ -49,7 +49,6 @@ def create_model(args):
 		data_path = os.path.join(project_path, 'data', 'clean_data.csv')
 		clean = False
 	
-	print(data_path)
 	
 	# Load data as pandas DataFrame
 	data = pd.read_csv(data_path)
@@ -70,14 +69,12 @@ def create_model(args):
 
 	# Load model
 	model = load_model(model_path)
-	print(f'Model loaded from {model_path}')
 
 	# Predict price on X_test
 	print('Making predictions')
 	preds = inference(model, X_test)
 
 	# Compute model metrics
-	print('Computing model metrics')
 	mdae, mae, r2_score = compute_model_metrics(X_test, y_test, preds, model)
 	
 	# Save metrics and print to terminal
@@ -96,16 +93,10 @@ if __name__ == '__main__':
 	)
 	
 	parser.add_argument(
-		'-t',
-		help='Tells the code to use --training_data argument.',
-		required=False,
-		action='store_true'
-	)
-	
-	parser.add_argument(
 		'--training_data',
 		help='The training dataset to use if -t. If -t is not used, this argument is ignored.',
 		type=str,
+		default='',
 		required=False
 	)
 	

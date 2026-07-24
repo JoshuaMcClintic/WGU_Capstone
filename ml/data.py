@@ -103,10 +103,7 @@ def process_train_data(df, do_clean=True):
 	# Fit transformer to dataset
 	enc = enc.fit(df[cat_cols])
 	# Encode categorical columns
-	df[cat_cols] = pd.DataFrame(
-		enc.transform(df[cat_cols]), 
-		columns=enc.get_feature_names_out()
-	)
+	df[cat_cols] = enc.transform(df[cat_cols])
 	
 	print('Splitting data into train and test')
 	# Split dataset to train and test

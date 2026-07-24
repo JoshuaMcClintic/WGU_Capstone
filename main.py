@@ -21,6 +21,8 @@ def go(args):
     model_path = os.path.join(project_path, 'model', 'model.pkl')
     enc_path = os.path.join(project_path, 'model', 'enc.pkl')
     md_path = os.path.join(project_path, 'data', 'metadata.json')
+    example_path = os.path.join(project_path, 'docs', 'example.csv')
+    example_output = os.path.join(project_path, 'docs', 'example_preds.csv')
     
     # Load model, column transformer, and metadata
     print('Loading model')
@@ -29,16 +31,13 @@ def go(args):
     md = load_metadata(md_path)
     
     # Process user data from input_file CL argument
-    if args.u:
-        user_df = args.input_file
-        user_df = pd.read_csv(user_df)
-        user_df = process_user_data(user_df, enc, md)
+    if args.e:
+    	user_df = example_path
     else:
-        user_df = 'example.csv'
-        user_df = pd.read_csv(user_df)
-        user_df = process_user_data(user_df, enc, md)
+        user_df = args.input_file
     
-    
+    user_df = pd.read_csv(user_df)
+    user_df = process_user_data(user_df, enc, md)
     
     # Predict user_df houes prices and write predictions to user_df
     print('Making predictions')
@@ -48,30 +47,34 @@ def go(args):
     # Load metrics and add prediction range to user_df
     metrics = load_metrics(metrics_path)
     mdae = round(metrics['mdae'], 2)
-    user_df['Minimum estimate'] = np.around(preds - mdae, decimals=2)
-    user_df['Maximum estimate'] = np.around(preds + mdae, decimals=2)
+    user_df['Minimum_estimate'] = np.around(preds - mdae, decimals=2)
+    user_df['Maximum_estimate'] = np.around(preds + mdae, decimals=2)
     
     # Inverse transform categorical columns
     cat_cols = md['cat_columns']
-    user_df[cat_cols] = pd.DataFrame(
-        enc.inverse_transform(user_df[cat_cols]),
-        columns=cat_cols
-    )
+    user_df[cat_cols] = enc.inverse_transform(user_df[cat_cols])
     
-    # If if -n is used, write output to new output_file, else add to input_file
+    # Only add outputs within user budget to df
+    budg = args.budget
+    user_df = user_df.query(f'Predictions <= {budget}')
+    
+    # Create the output file. If no output is specified, overwrite original file
     print('Writing to file')
-    if args.n:
+    if args.output_file != '':
         user_df.to_csv(args.output_file, index=False)
     else:
-        user_df.to_csv(args.input_file)
+        if args.e:
+            user_df.to_csv(example_output, index=False)
+        else:
+            user_df.to_csv(args.input_file, index=False)
    
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Making predictions')
     
     parser.add_argument(
-        '-u',
-        help='Use user file rather than example file. If not set, example.csv is automatically used.',
+        '-e',
+        help='Run the script on the "example.csv" file. If used, the --input_file argument is ignored.',
         action='store_true'
     )
     
@@ -83,15 +86,19 @@ if __name__ == '__main__':
     )
     
     parser.add_argument(
-        '-n',
-        help='If set, uses --output as file output. If not, overwrites the input file by adding predicion columns.',
-        action='store_true'
+        '--output_file',
+        help='If used, specifies the output. This argument must contain the filepath to the file, as well as the filename.',
+        type=str,
+        default='',
+        required=False
     )
     
     parser.add_argument(
-        '--output_file',
-        help='If -n is used, the output path of the new file, including filename.',
-        type=str
+        '--budget',
+        help='If specified, this argument is used to filter out rows if the predicted price is above it. It should not contain decimal values, only whole numbers.',
+        type=int,
+        default=10000000,
+        required=False
     )
     
     args = parser.parse_args()

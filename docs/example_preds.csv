@@ -1,0 +1,4 @@
+status,bed,bath,acre_lot,city,state,zip_code,house_size,Predictions,Minimum estimate,Maximum estimate
+,2,2,0.26,,Mississippi,39507.0,1500,158490.56,113873.94,203107.18
+,1,3,0.26,,Oregon,,1950,640738.82,596122.2,685355.44
+,5,4,0.26,,California,90002.0,1300,583057.07,538440.45,627673.69

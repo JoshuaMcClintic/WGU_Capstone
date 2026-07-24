@@ -56,7 +56,7 @@ def go(args):
     
     # Only add outputs within user budget to df
     budg = args.budget
-    user_df = user_df.query(f'Predictions <= {budget}')
+    user_df = user_df.query(f'Predictions <= {budg}')
     
     # Create the output file. If no output is specified, overwrite original file
     print('Writing to file')
